@@ -7,6 +7,21 @@
 <meta charset="utf-8">
 <meta name="og:image" content="https://kururu.github.io/img/ogp02b.jpg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+fetch('https://php01-brown.vercel.app/api/note01.php')
+.then(response => {
+if (!response.ok) {
+throw new Error(`HTTP error! Status: ${response.status}`);
+}
+return response.json();
+})
+.then(data => {
+console.log("取得したJSONデータ:", data);
+})
+.catch(error => {
+console.error("データ取得エラー:", error);
+});
+</script>
 </head>
 <body>
 <div class="img"><img src="https://kururu.github.io/img/ogp02.jpg"></div>
