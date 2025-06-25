@@ -28,3 +28,13 @@ ul.list li a{
 	display: list-item;
 	margin-left: 18px;
 }
+
+#note01{
+	padding: 0 10px;
+}
+
+#note01 h2{
+	margin: 0;
+    font-size: 1em;
+    font-weight: normal;
+}
