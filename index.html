@@ -7,18 +7,6 @@
 <meta charset="utf-8">
 <meta name="og:image" content="https://kururu.github.io/img/ogp02b.jpg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<div class="img"><img src="https://kururu.github.io/img/ogp02.jpg"></div>
-<ul class="list">
-<li><a href="https://r1.community.samsung.com/t5/user/viewprofilepage/user-id/161884965">samusung community</a></li>
-<li><a href="https://www.reddit.com/user/Alternative-Run7459/">reddit</a></li>
-<li><a href="https://kururu01.notion.site/Home-c10f8e497e4341ff84f6bcaee8671348">notion</a></li>
-<li><a href="https://note.com/kururu01">note</a></li>
-<li><a href="https://chat-vrm-theta.vercel.app/">ChatVRM: SHAREVOXと連携</a></li>
-</ul>
-
-<div id="note01"></div>
 <script>
   fetch('https://php01-brown.vercel.app/api/note01.php')
     .then(response => response.json())
@@ -40,5 +28,18 @@
       document.getElementById('note01').textContent = 'データの読み込みに失敗しました。';
     });
 </script>
+</head>
+<body>
+<div class="img"><img src="https://kururu.github.io/img/ogp02.jpg"></div>
+<ul class="list">
+<li><a href="https://r1.community.samsung.com/t5/user/viewprofilepage/user-id/161884965">samusung community</a></li>
+<li><a href="https://www.reddit.com/user/Alternative-Run7459/">reddit</a></li>
+<li><a href="https://kururu01.notion.site/Home-c10f8e497e4341ff84f6bcaee8671348">notion</a></li>
+<li><a href="https://note.com/kururu01">note</a></li>
+<li><a href="https://chat-vrm-theta.vercel.app/">ChatVRM: SHAREVOXと連携</a></li>
+</ul>
+
+<div id="note01">読み込み中...</div>
+
 </body>
 </html>
