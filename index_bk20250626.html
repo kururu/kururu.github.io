@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<title>kururu プロフィール</title>
+<link rel="icon" href="https://kururu.github.io/img/nendo02.png" sizes="192x192" />
+<link href="css/style.css" rel="stylesheet" />
+<meta charset="utf-8">
+<meta name="og:image" content="https://kururu.github.io/img/ogp02b.jpg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  fetch('https://php01-brown.vercel.app/api/note01.php')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('note01');
+
+      // サムネイルとタイトルのHTMLを構築
+      const html = `
+        <a href="${data.link}" target="_blank" style="text-decoration: none; color: inherit;">
+          <img src="${data.thumbnail}" alt="thumbnail" style="width:100%; max-width:420px; border-radius:8px;" />
+          <h2>${data.title}</h2>
+        </a>
+      `;
+
+      container.innerHTML = html;
+    })
+    .catch(error => {
+      console.error('データ取得エラー:', error);
+      document.getElementById('note01').textContent = 'データの読み込みに失敗しました。';
+    });
+</script>
+</head>
+<body>
+<div class="img"><img src="https://kururu.github.io/img/ogp02.jpg"></div>
+<ul class="list">
+<li><a href="https://r1.community.samsung.com/t5/user/viewprofilepage/user-id/161884965">samusung community</a></li>
+<li><a href="https://www.reddit.com/user/Alternative-Run7459/">reddit</a></li>
+<li><a href="https://kururu01.notion.site/Home-c10f8e497e4341ff84f6bcaee8671348">notion</a></li>
+<li><a href="https://note.com/kururu01">note</a></li>
+<li><a href="https://chat-vrm-theta.vercel.app/">ChatVRM: SHAREVOXと連携</a></li>
+</ul>
+
+<div id="note01">読み込み中...</div>
+
+<div id="output"></div>
+
+<script>
+load01();
+function load01() {
+document.getElementById("output").innerHTML = "";
+const endpoint = "https://script.google.com/macros/s/AKfycbz5RWCwhOyBHzTkKIdgK4shELo6wiZIcdAzJK8iYehDzdMKsI3RNz3IO29729Td2LcH/exec"; // ← 自分のエンドポイントに差し替えてください
+
+fetch(endpoint)
+.then(response => response.json())
+.then(data => {
+  const container = document.getElementById("output");
+
+  data.forEach(item => {
+    const time = new Date(item.time);
+    const formattedTime = `${time.getFullYear()}/${time.getMonth()+1}/${time.getDate()} ${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}`;
+    const cleanText = item.text.replace(/^"|"$/g, ''); // 前後の " を除去
+
+    const entry = document.createElement("div");
+    entry.className = "entry";
+
+    entry.innerHTML = `
+      <div class="time">${formattedTime}</div>
+      <div class="text">${cleanText}</div>
+    `;
+
+    container.appendChild(entry);
+  });
+})
+.catch(error => {
+  console.error("エラー:", error);
+});
+}
+</script>
+
+
+
+<button onclick="sendData()">ボタンを押す</button>
+
+<script>
+function sendData() {
+  const text = encodeURIComponent("ボタンを押しました");
+  const url = `https://script.google.com/macros/s/AKfycbz5RWCwhOyBHzTkKIdgK4shELo6wiZIcdAzJK8iYehDzdMKsI3RNz3IO29729Td2LcH/exec?text01=${text}`;
+
+  fetch(url)
+    .then(response => response.text())  // GASがJSON返すなら .json() に変更
+    .then(data => {
+      console.log("レスポンス:", data);
+      alert("送信成功");
+      load01();
+    })
+    .catch(error => {
+      console.error("エラー:", error);
+    });
+}
+</script>
+
+</body>
+</html>
