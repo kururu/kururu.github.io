@@ -41,6 +41,10 @@ ul.list li a{
 	line-height: 0;
 	position: relative;
 }
+#note01 .loading{
+	padding: 10px 10px 0 10px;
+	display: block;
+}
 #note01 a{
 	display: block;
 	padding: 0 10px;
