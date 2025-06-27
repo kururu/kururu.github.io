@@ -22,6 +22,12 @@ ul.list{
 ul.list li{
 	border-bottom: 1px solid #ccc;
 	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
+ul.list li:last-child{
+	border-bottom: none;
+	padding-bottom: 5px;
+	margin-bottom: 0px;
 }
 ul.list li a{
 	list-style-type: disc;
@@ -30,20 +36,22 @@ ul.list li a{
 }
 
 #note01{
-	margin: 0 10px;
-	width:100%; max-width:420px;
-	position: relative;
+	width:100%;
+	max-width:440px;
 	line-height: 0;
+	position: relative;
 }
-
+#note01 a{
+	display: block;
+	padding: 0 10px;
+}
 #note01 img{
 	width:100%;
-	max-width:420px;
 	border-radius:8px;
 }
 #note01 .logo{
 	position: absolute;
-	right: 8px;
+	right: 18px;
 	top: 8px;
 	background: url(../img/parts/logo_note.png) no-repeat left top;
 	width: 20px;
@@ -55,11 +63,18 @@ ul.list li a{
     font-size: 1em;
     font-weight: normal;
     position: absolute;
-    left: 8px;
+    left: 18px;
     bottom: 8px;
     line-height: 1em;
     padding: 5px 15px;
     background: #fff;
     background: rgba(255,255,255,0.7);
     border-radius: 99px;
+}
+
+
+@media (max-width: 455px) {
+#note01{
+	max-width: none;
+}
 }
