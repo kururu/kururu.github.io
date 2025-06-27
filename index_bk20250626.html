@@ -52,6 +52,20 @@
   color: #fff;
   font-size: 13px;
   width: 45px;
+  margin-left: 5px;
+}
+.postform{
+  margin: 10px 0 10px 10px;
+}
+
+.postform::after {
+   content: "";
+   display: block;
+   clear: both;
+}
+
+.postform input{
+  float: left;
 }
 
 @media (max-width: 470px) {
@@ -81,7 +95,7 @@
 
 
 
-<div style="margin: 10px 0 10px 10px;">
+<div class="postform">
 <input type="text" id="textInput" placeholder="入力してください">
 <button id="postButton" onclick="sendPost()">送信</button></div>
 
