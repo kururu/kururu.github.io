@@ -69,7 +69,7 @@ ul.list li a{
     position: absolute;
     left: 18px;
     bottom: 8px;
-    line-height: 1em;
+    line-height: 1.0;
     padding: 5px 15px;
     background: #fff;
     background: rgba(255,255,255,0.8);
