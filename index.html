@@ -7,27 +7,7 @@
 <meta charset="utf-8">
 <meta name="og:image" content="https://kururu.github.io/img/ogp02b.jpg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-  fetch('https://php01-brown.vercel.app/api/note01.php')
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById('note01');
-
-      // サムネイルとタイトルのHTMLを構築
-      const html = `
-        <a href="${data.link}" target="_blank" style="text-decoration: none; color: inherit;">
-          <img src="${data.thumbnail}" alt="thumbnail" style="width:100%; max-width:420px; border-radius:8px;" />
-          <h2>${data.title}</h2>
-        </a>
-      `;
-
-      container.innerHTML = html;
-    })
-    .catch(error => {
-      console.error('データ取得エラー:', error);
-      document.getElementById('note01').textContent = 'データの読み込みに失敗しました。';
-    });
-</script>
+<script src="./js/note.js"></script>
 </head>
 <body>
 <div class="img"><img src="https://kururu.github.io/img/ogp02.jpg"></div>

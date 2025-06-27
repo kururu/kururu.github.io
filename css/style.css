@@ -30,11 +30,36 @@ ul.list li a{
 }
 
 #note01{
-	padding: 0 10px;
+	margin: 0 10px;
+	width:100%; max-width:420px;
+	position: relative;
+	line-height: 0;
 }
 
+#note01 img{
+	width:100%;
+	max-width:420px;
+	border-radius:8px;
+}
+#note01 .logo{
+	position: absolute;
+	right: 8px;
+	top: 8px;
+	background: url(../img/parts/logo_note.png) no-repeat left top;
+	width: 20px;
+	height: 20px;
+	background-size: 20px 20px;
+}
 #note01 h2{
 	margin: 0;
     font-size: 1em;
     font-weight: normal;
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    line-height: 1em;
+    padding: 5px 15px;
+    background: #fff;
+    background: rgba(255,255,255,0.7);
+    border-radius: 99px;
 }
