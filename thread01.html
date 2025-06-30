@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Threads JSON 表示</title>
+  <style>
+
+    #output01{
+      margin: 0 10px;
+      max-width: 400px;
+    }
+    .img01{
+      margin: 10px 0 0 0;
+      border-radius: 10px;
+      border:2px solid #eee;
+      max-width: 396px;
+    }
+    .iframe01{
+      border-radius: 10px;
+    }
+    .div01{
+      margin: 0 0 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="output01">読み込み中...</div>
+
+  
+
+<script>
+function link01(text) {
+    const urlRegex = /https?:\/\/[^\s]+/g;
+
+    return text.replace(urlRegex, url => {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+}
+// YouTubeリンクの正規表現にマッチしたらiframeに変換
+const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+const urlRegex = /https?:\/\/[^\s]+/g;
+fetch("https://php01-brown.vercel.app/api/thread01.php")
+.then(response => {
+    if (!response.ok) {
+        throw new Error("ネットワーク応答に問題があります");
+    }
+    return response.json();
+})
+.then(data => {
+    const container = document.getElementById("output01");
+    container.innerHTML = "";
+
+    const post = data.data[0];
+    if (post && post.text) {
+        const textDiv = document.createElement("div");
+        textDiv.textContent = post.text;
+
+        var text = post.text;
+        const div = document.createElement("div");
+
+        const match = text.match(youtubeRegex);
+
+        if (match) {
+            const videoId = match[1];
+            const iframe = document.createElement("iframe");
+
+            iframe.width = "400";
+            iframe.height = "225";
+            iframe.src = `https://www.youtube.com/embed/${videoId}`;
+            iframe.title = "YouTube video player";
+            iframe.className = "iframe01"
+            iframe.frameBorder = "0";
+            iframe.allow =
+                "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+
+            var text = text.replace(youtubeRegex, "");
+            const ampIndex = text.indexOf('&'); // '&' の位置を見つける
+
+            let cleanedText;
+            if (ampIndex !== -1) { // '&' が見つかった場合
+                cleanedText = text.substring(0, ampIndex); // '&' より前の部分を取得
+            } else { // '&' が見つからなかった場合
+                cleanedText = text; // 元の文字列をそのまま使う
+            }
+            const questionMarkIndex = text.indexOf('?'); // '?' の位置を見つける
+
+            if (questionMarkIndex !== -1) { // '?' が見つかった場合
+                cleanedText = text.substring(0, questionMarkIndex); // '?' より前の部分を取得
+            } else { // '?' が見つからなかった場合
+                cleanedText = text; // 元の文字列をそのまま使う
+            }
+
+
+
+            // HTMLとして出力（textContent ではなく innerHTML）
+            div.innerHTML = link01(cleanedText);
+
+            //div.textContent = cleanedText;
+            div.className = "div01"
+            container.appendChild(div);
+            container.appendChild(iframe);
+        } else {
+            // 通常のテキストを表示
+            div.innerHTML = link01(text);
+            container.appendChild(div);
+        }
+
+        //container.appendChild(textDiv);
+
+        if (post.media_url) {
+            const img = document.createElement("img");
+            img.src = post.media_url;
+            img.alt = "投稿画像";
+            img.className = "img01"
+            container.appendChild(img);
+        }
+
+    } else {
+        output.textContent = "投稿が見つかりませんでした。";
+    }
+})
+.catch(error => {
+    document.getElementById("output01").textContent = "エラー: " + error.message;
+});
+</script>
+</body>
+</html>
