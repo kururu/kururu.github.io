@@ -37,7 +37,7 @@ function link01(text) {
     });
 }
 // YouTubeリンクの正規表現にマッチしたらiframeに変換
-const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
 const urlRegex = /https?:\/\/[^\s]+/g;
 fetch("https://php01-brown.vercel.app/api/thread01.php")
 .then(response => {
@@ -64,8 +64,15 @@ fetch("https://php01-brown.vercel.app/api/thread01.php")
             const videoId = match[1];
             const iframe = document.createElement("iframe");
 
+
+
             iframe.width = "400";
             iframe.height = "225";
+
+            if (text.includes("youtube.com/shorts/")) {
+              iframe.width = "400";
+              iframe.height = "400";
+            }
             iframe.src = `https://www.youtube.com/embed/${videoId}`;
             iframe.title = "YouTube video player";
             iframe.className = "iframe01"
