@@ -42,7 +42,8 @@ ul.list li a{
 	position: relative;
 }
 #note01 .loading{
-	padding: 10px 10px 0 10px;
+	padding: 10px;
+	margin: 0 10px;
 	display: block;
 }
 #note01 a{
