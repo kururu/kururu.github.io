@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<title>SMPサイズ</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div id="windowSize"></div>
+
+<script>
+  function updateWindowSize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    document.getElementById('windowSize').textContent = `幅: ${width}px, 高さ: ${height}px`;
+  }
+
+  // 初回実行
+  updateWindowSize();
+
+  // リサイズ時にも更新
+  window.addEventListener('resize', updateWindowSize);
+</script>
+</body>
+</html>
