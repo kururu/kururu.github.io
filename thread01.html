@@ -9,6 +9,12 @@
 #output01{
   margin: 0 10px;
   max-width: 400px;
+  word-break: break-all;
+}
+
+img.ogp{
+    margin-top: 10px;
+    border-radius: 10px;
 }
 .img01{
   margin: 10px 0 0 0;
@@ -40,12 +46,50 @@
 
 <script>
 function link01(text) {
-    const urlRegex = /https?:\/\/[^\s]+/g;
+  const urlRegex = /https?:\/\/[^\s]+/g;
+  let firstLinkFound = false;
+  let firstUrl = "";
 
-    return text.replace(urlRegex, url => {
-        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  const html = text.replace(urlRegex, url => {
+    if (!firstLinkFound) {
+      firstLinkFound = true;
+      firstUrl = url;
+    }
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+
+  // 最初のリンクだけ OGP取得を実行
+  if (firstUrl) {
+    fetchOGPImage(firstUrl);
+  }
+
+  return html;
+}
+
+function fetchOGPImage(url) {
+  fetch(`https://php01-brown.vercel.app/api/ogp01.php?url=${encodeURIComponent(url)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.og_image) {
+        const img = document.createElement("img");
+        img.src = data.og_image;
+        img.alt = "OGP";
+        img.style.maxWidth = "100%";
+        img.loading = "lazy";
+        img.className = "ogp"
+
+        // OGP画像をoutputの末尾に追加
+        const container = document.getElementById("output01");
+        if (container) {
+          container.appendChild(img);
+        }
+      }
+    })
+    .catch(error => {
+      console.error("OGP取得失敗:", error);
     });
 }
+
 // YouTubeリンクの正規表現にマッチしたらiframeに変換
 const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
 const urlRegex = /https?:\/\/[^\s]+/g;
@@ -92,23 +136,25 @@ fetch("https://php01-brown.vercel.app/api/thread01.php")
             iframe.allowFullscreen = true;
 
             var text = text.replace(youtubeRegex, "");
-            const ampIndex = text.indexOf('&'); // '&' の位置を見つける
 
-            let cleanedText;
-            if (ampIndex !== -1) { // '&' が見つかった場合
-                cleanedText = text.substring(0, ampIndex); // '&' より前の部分を取得
-            } else { // '&' が見つからなかった場合
-                cleanedText = text; // 元の文字列をそのまま使う
-            }
-            const questionMarkIndex = text.indexOf('?'); // '?' の位置を見つける
 
-            if (questionMarkIndex !== -1) { // '?' が見つかった場合
-                cleanedText = text.substring(0, questionMarkIndex); // '?' より前の部分を取得
-            } else { // '?' が見つからなかった場合
-                cleanedText = text; // 元の文字列をそのまま使う
+            // ? または & のどちらか早く出てきた方の位置を取得
+            const questionMarkIndex = text.indexOf('?');
+            const ampIndex = text.indexOf('&');
+
+            // -1でなければ対象のインデックスとして採用、なければテキスト末尾
+            let cutIndex = text.length;
+
+            if (questionMarkIndex !== -1 && questionMarkIndex < cutIndex) {
+                cutIndex = questionMarkIndex;
             }
 
+            if (ampIndex !== -1 && ampIndex < cutIndex) {
+                cutIndex = ampIndex;
+            }
 
+            // その位置まででテキストを切り出し
+            const cleanedText = text.substring(0, cutIndex);
 
             // HTMLとして出力（textContent ではなく innerHTML）
             div.innerHTML = link01(cleanedText);
