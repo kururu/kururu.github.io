@@ -80,9 +80,25 @@ ul.list li a{
     align-items: center;
 }
 
+.profile{
+	display: flex;
+	align-items: baseline;
+}
+.badge{
+	margin: 10px 0 0 0px;
+}
+.badge img{
+	width: 90px;
+	height: auto;
+	margin: 0px 10px 0 0;
+}
+
 
 @media (max-width: 455px) {
 #note01{
 	max-width: none;
+}
+.profile{
+	align-items: center;
 }
 }
