@@ -7,9 +7,13 @@
 <body>
   <h1>あなたのUserAgent:</h1>
   <p id="ua"></p>
+  <p id="ma"></p>
 
   <script>
     document.getElementById("ua").textContent = navigator.userAgent;
+    if (navigator.userAgent.includes("MyAppWebView")) {
+      document.getElementById("ma").textContent = "アプリ内WebViewからアクセスされています";
+    }
   </script>
 </body>
 </html>
